@@ -1,37 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+const auth = require('../../middleware/auth');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const Member = require('../../models/Members');
 
-// bubba's id: 5e3e53d679f66d1b5b17dca0
-// dave's id: 5e3e56505162ce1bc069c449
-
-// @route   POST api/users
+// @route   GET api/users
 // @desc    Register user
 // @access  Public
 router.get(
     '/',
-    [
-        check('member_id', 'invalid request')
-            .not()
-            .isEmpty()
-    ],
+    auth,
+    [check('member_id', 'invalid request').exists()],
 
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        console.log('we are going... somewhere');
-        console.log(req);
+        const { member_id } = req.body;
+
         try {
             // get the member
-            const member = await Member.findById(req.member_id);
+            const member = await Member.findById(member_id);
 
             //if we don't get profile, send back an error
             if (!member) {
@@ -53,6 +46,7 @@ router.get(
 // @access  Public
 router.post(
     '/',
+    auth,
     [
         check('name', 'Name is required')
             .not()
