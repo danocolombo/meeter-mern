@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://meeter:MgOvjNVQvE8gtNur@meeter-wbc-m5uzd.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtToken": "theSecretToken"
+}
