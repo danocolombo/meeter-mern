@@ -9,10 +9,10 @@ const MeetingSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    // presenter: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'users'
-    // },
+    presenter: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
+    },
     attendance: {
         type: Number
     },
